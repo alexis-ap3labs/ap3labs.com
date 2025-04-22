@@ -18,19 +18,7 @@
   } as const;
 
   let scrollProgress = 0;
-  let mouseX = 0;
-  let mouseY = 0;
   let mainElement: HTMLElement;
-
-  function handleMouseMove(event: MouseEvent) {
-    if (!mainElement) return;
-    const { clientX, clientY } = event;
-    const { width, height } = mainElement.getBoundingClientRect();
-    
-    // Normalize coordinates between -1 and 1
-    mouseX = (clientX / width) * 2 - 1;
-    mouseY = (clientY / height) * 2 - 1;
-  }
 
   /**
    * Initialize page behavior
@@ -106,7 +94,7 @@
   /* Modifier le background global */
   :global(body) {
     min-height: 100vh;
-    background: var(--color-dark); /* Fond uni */
+    background-color: var(--bg-dark); /* Utiliser bg-dark au lieu de color-dark */
     margin: 0;
     padding: 0;
   }
@@ -116,56 +104,6 @@
     min-height: 100vh;
     background: transparent;
     overflow: visible;
-  }
-
-  .background-grain {
-    position: fixed;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity: 0.15; /* Réduire l'opacité */
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Ajuster l'opacité et la taille du cursor-glow */
-  .cursor-glow {
-    position: fixed;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(
-      circle at center,
-      rgba(255, 136, 0, 0.15),
-      transparent 70%
-    );
-    border-radius: 50%;
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    opacity: 0.2; /* Réduire l'opacité */
-    mix-blend-mode: screen;
-  }
-
-  .floating-element {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--color-orange-10), transparent);
-    filter: blur(100px);
-    opacity: 0.15; /* Réduire l'opacité */
-    pointer-events: none;
-  }
-
-  .floating-element:nth-child(1) {
-    top: 20%;
-    left: 10%;
-  }
-
-  .floating-element:nth-child(2) {
-    bottom: 30%;
-    right: 15%;
   }
 
   :global(.parallax) {
@@ -194,19 +132,9 @@
   ></div>
 </div>
 
-<div 
-  class="cursor-glow"
-  style="left: {50 + mouseX * 100}%; top: {50 + mouseY * 100}%"
-/>
-
-<div class="background-grain" />
-<div class="floating-element parallax" data-speed="-0.2" />
-<div class="floating-element parallax" data-speed="0.1" />
-
 <!-- Main Content -->
 <main 
   bind:this={mainElement}
-  on:mousemove={handleMouseMove}
   style="--scroll: {scrollProgress}"
 >
   <Hero />
@@ -224,6 +152,6 @@
 <Footer />
 
 <svelte:head>
-    <title>Alexis Péron - Full Stack Developer | AP3 Labs</title>
-    <meta name="description" content="Passionate Full Stack Developer with expertise in JavaScript, TypeScript, React, and Node.js. Discover my portfolio and professional journey at AP3 Labs." />
+    <title>AP3 Labs - Scalable DeFi Operations</title>
+    <meta name="description" content="End-to-end custom solutions for DeFi operations — from strategy design and infrastructure setup to ongoing operations and reporting tools. Full-stack DeFi yield implementation." />
 </svelte:head>

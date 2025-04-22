@@ -118,22 +118,22 @@
 </style>
 
 <section bind:this={container} bind:this={ref}>
-  <div class="content-wrapper max-w-4xl mx-auto text-center px-4">
+  <div class="content-wrapper ml-[10%] px-4">
     {#if mounted}
       <h1 
-        class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-light mb-4"
+        class="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tight text-light mb-4 max-w-2xl"
         in:fly={{ y: 20, duration: 800, delay: 200 }}
       >
         Scalable DeFi Operations
       </h1>
       <h2 
-        class="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-400 mb-12"
+        class="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-400 mb-12 max-w-2xl"
         in:fly={{ y: 20, duration: 800, delay: 400 }}
       >
         for Asset Managers
       </h2>
       <p 
-        class="text-light/80 text-lg sm:text-xl md:text-2xl text-light/90 mb-12 leading-relaxed max-w-3xl mx-auto"
+        class="text-light/80 text-lg sm:text-xl md:text-2xl text-light/90 mb-12 leading-relaxed max-w-2xl"
         in:fly={{ y: 20, duration: 800, delay: 600 }}
       >
         <span class="font-bold text-[var(--color-orange)]">Full‑stack DeFi yield implementation</span>
