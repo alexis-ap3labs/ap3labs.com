@@ -1,11 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { fade, fly } from 'svelte/transition';
-  
-    /**
-     * Props
-     */
-    export let activeSection = '';
+    import { activeSection } from '../stores/navigation';
   
     /**
      * State variables
@@ -17,13 +13,75 @@
     let isHeaderMounted = false;
   
     /**
-     * Checks if a section is currently active
-     * @param {string} section - Section identifier
-     * @returns {boolean}
+     * Fonction pour détecter quelle section est visible
      */
-    $: isActive = (section: string) => {
-        return activeSection === section;
-    };
+    function updateActiveSection() {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+        sections.forEach((section) => {
+            // Cast section to HTMLElement since querySelectorAll returns Element
+            const sectionElement = section as HTMLElement;
+            const sectionTop = sectionElement.offsetTop;
+            const sectionHeight = sectionElement.offsetHeight;
+            const sectionId = sectionElement.getAttribute('id') || '';
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                if ($activeSection !== sectionId) {
+                    activeSection.set(sectionId);
+                    history.replaceState(null, '', `/#${sectionId}`);
+                }
+            }
+        });
+    }
+
+    /**
+     * Checks if a section is currently active
+     */
+    $: isActive = (section: string) => $activeSection === section;
+
+    /**
+     * Handle URL hash changes
+     */
+    function handleHashChange() {
+        const hash = window.location.hash.slice(1);
+        if (hash) {
+            activeSection.set(hash);
+        }
+    }
+
+    /**
+     * Initializes header animations and scroll behavior
+     */
+    onMount(() => {
+        // Initial hash check and section update
+        handleHashChange();
+        updateActiveSection();
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashChange);
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            isNavVisible = currentScrollY < lastScrollY || currentScrollY < 50;
+            hasScrolled = currentScrollY > 50;
+            lastScrollY = currentScrollY;
+            
+            // Mettre à jour la section active pendant le défilement
+            updateActiveSection();
+        };
+  
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        setTimeout(() => {
+            isHeaderMounted = true;
+        }, 300);
+  
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('hashchange', handleHashChange);
+        };
+    });
 
     /**
      * Toggles mobile menu state
@@ -33,34 +91,18 @@
     };
 
     /**
-     * Closes mobile menu when a link is clicked
+     * Handles link click
      */
-    const handleLinkClick = () => {
+    const handleLinkClick = (section: string) => {
         isMenuOpen = false;
-    };
-  
-    /**
-     * Initializes header animations and scroll behavior
-     */
-    onMount(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            isNavVisible = currentScrollY < lastScrollY || currentScrollY < 50;
-            hasScrolled = currentScrollY > 50;
-            lastScrollY = currentScrollY;
-        };
-  
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        activeSection.set(section);
         
-        // Delay header animations
-        setTimeout(() => {
-            isHeaderMounted = true;
-        }, 300);
-  
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    });
+        // Scroll doux vers la section
+        const element = document.getElementById(section);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
 </script>
   
 <style>
@@ -183,7 +225,7 @@
 </style>
   
 <header 
-    class="fixed top-0 left-0 right-0 z-50 bg-dark transition-all duration-300 {hasScrolled ? 'shadow-lg shadow-dark/50' : ''}"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     class:translate-y-[-100%]={!isNavVisible}
     class:opacity-0={!isNavVisible}
 >
@@ -202,67 +244,44 @@
             <ul class="nav-links text-light/60" class:open={isMenuOpen}>
                 <li in:fly={{ y: -20, duration: 800, delay: 200 }}>
                     <a 
-                        href="/#about" 
+                        href="/#services" 
                         class="group flex items-center gap-2 hover:text-primary transition-colors"
-                        class:active-link={isActive('about')}
-                        on:click={handleLinkClick}
+                        class:active-link={isActive('services')}
+                        on:click={() => handleLinkClick('services')}
                     >
                         <span class="number text-sm">01.</span>
                         <span class="relative">
-                            About
+                            Services
                             <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                         </span>
                     </a>
                 </li>
                 <li in:fly={{ y: -20, duration: 800, delay: 300 }}>
                     <a 
-                        href="/#experience" 
+                        href="/#projects" 
                         class="group flex items-center gap-2 hover:text-primary transition-colors"
-                        class:active-link={isActive('experience')}
-                        on:click={handleLinkClick}
+                        class:active-link={isActive('projects')}
+                        on:click={() => handleLinkClick('projects')}
                     >
                         <span class="number text-sm">02.</span>
                         <span class="relative">
-                            Experience
+                            Projects
                             <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                         </span>
                     </a>
                 </li>
                 <li in:fly={{ y: -20, duration: 800, delay: 400 }}>
                     <a 
-                        href="/#projects" 
+                        href="/#about" 
                         class="group flex items-center gap-2 hover:text-primary transition-colors"
-                        class:active-link={isActive('projects')}
-                        on:click={handleLinkClick}
+                        class:active-link={isActive('about')}
+                        on:click={() => handleLinkClick('about')}
                     >
                         <span class="number text-sm">03.</span>
                         <span class="relative">
-                            Work
+                            About
                             <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                         </span>
-                    </a>
-                </li>
-                <li in:fly={{ y: -20, duration: 800, delay: 500 }}>
-                    <a 
-                        href="/#contact" 
-                        class="group flex items-center gap-2 hover:text-primary transition-colors"
-                        class:active-link={isActive('contact')}
-                        on:click={handleLinkClick}
-                    >
-                        <span class="number text-sm">04.</span>
-                        <span class="relative">
-                            Contact
-                            <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
-                        </span>
-                    </a>
-                </li>
-                <li in:fly={{ y: -20, duration: 800, delay: 600 }}>
-                    <a 
-                        href="#" 
-                        class="cursor-not-allowed opacity-50"
-                        on:click|preventDefault
-                    >
-                        Resume
                     </a>
                 </li>
             </ul>
@@ -291,9 +310,9 @@
             on:click={() => isMenuOpen = false}
         ></div>
     </nav>
-    <!-- Divider -->
+    <!-- Supprimer le divider ou le rendre plus subtil -->
     <div 
-        class="h-[1px] w-full bg-light/10 transition-opacity duration-300"
+        class="h-[1px] w-full bg-light/5 transition-opacity duration-300"
         class:opacity-0={!hasScrolled}
     ></div>
 </header> 

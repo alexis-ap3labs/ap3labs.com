@@ -34,7 +34,7 @@
 </script>
 
 <div class="font-satoshi min-h-screen bg-dark text-white">
-  <main class="relative min-h-screen pb-32">
+  <main class="relative min-h-screen">
     <div class="overflow-x-hidden">
       {#if isLoading}
         <Loader {finishLoading} />

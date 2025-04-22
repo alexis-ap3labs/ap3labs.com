@@ -1,132 +1,208 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { fade, fly } from 'svelte/transition';
-  import { isPageLoaded } from '../stores/loading';
-  
-  /**
-   * Project interface defining the structure of project entries
-   */
-  type Project = {
-    title: string;
-    description: string;
-    image: string;
-    link: string;
-    technologies: string[];
-    featured?: boolean;
-  };
+  import { cubicOut } from 'svelte/easing';
 
-  /**
-   * Array of featured projects
-   * @type {Project[]}
-   */
-  const projects: Project[] = [
+  const images = [
     {
-      title: "ERC-4626 DeFi Interface",
-      description: "A decentralized, modular DApp for interacting with ERC-4626 vaults. Deposit, withdraw, and track assets with real-time analytics via TheGraph. Custom wallet integration with Svelte stores and window.ethereum — no wagmi, no bloat.",
-      image: "app-detrade.png",
-      link: "https://app.detrade.fund/",
-      technologies: ["TypeScript", "Svelte", "HTML/CSS", "TailwindCSS", "Ethers.js"],
-      featured: true
+      src: "/app-detrade.png",
+      alt: "DeTrade App Interface",
+      link: "https://app.detrade.fund/"
     },
     {
-      title: "Oracle NAV",
-      description: "Oracle for pushing NAVs and calculating vault asset liquidation value, leveraging on-chain smart contract data and APIs for asset conversion. Cron task in GitHub Actions for regular valuation pushes.",
-      image: "oracle-detrade.png",
-      link: "https://oracle.detrade.fund/",
-      technologies: ["Python", "GitHub Actions", "Web3.py", "APIs", "Smart Contracts"],
-      featured: true
+      src: "/oracle-detrade.png",
+      alt: "DeTrade Oracle Interface",
+      link: "https://oracle.detrade.fund/"
+    },
+    {
+      src: "/detrade.png",
+      alt: "DeTrade Landing Page",
+      link: "https://detrade.fund/"
+    },
+    {
+      src: "/docs-detrade.png",
+      alt: "DeTrade Documentation",
+      link: "https://docs.detrade.fund/"
+    },
+    {
+      src: "/dtusdc-detrade.png",
+      alt: "DeTrade Core USDC Vault",
+      link: "https://app.detrade.fund/vault/detrade-core-usdc"
     }
   ];
 
-  /**
-   * State for section visibility
-   * @type {boolean}
-   */
+  let currentImageIndex = 0;
   let isVisible = false;
 
-  /**
-   * Handles initial page load and scroll behavior
-   */
-  onMount(() => {
-    const hash = window.location.hash.slice(1);
-    
-    if (hash === 'projects') {
-      const unsubscribe = isPageLoaded.subscribe(loaded => {
-        if (loaded) {
-          setTimeout(() => {
-            const section = document.getElementById('projects');
-            if (section) {
-              const offset = 50;
-              window.scrollTo({
-                top: section.offsetTop - offset,
-                behavior: 'smooth'
-              });
-            }
-          }, 100);
-          unsubscribe();
-        }
-      });
-    }
+  let blocks: HTMLElement[] = [];
+  let visibleBlocks = new Set();
 
+  function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+  }
+
+  function getTransitionDelay(index: number): number {
+    return 400 * index;
+  }
+
+  onMount(() => {
     isVisible = true;
 
-    // Initialize intersection observer for animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = (entry.target as HTMLElement).dataset.index;
+            if (index) {
+              visibleBlocks.add(parseInt(index));
+              visibleBlocks = visibleBlocks;
+            }
+          }
+        });
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
 
-    const section = document.getElementById('projects');
-    if (section) {
-      observer.observe(section);
-    }
+    blocks.forEach((block, index) => {
+      if (block) {
+        block.dataset.index = index.toString();
+        observer.observe(block);
+      }
+    });
 
     return () => {
-      observer.disconnect();
+      blocks.forEach(block => {
+        if (block) observer.unobserve(block);
+      });
     };
   });
 </script>
 
 <style>
-  /* Section number styling */
-  .number {
-    color: var(--color-orange);
-    opacity: 1;
+  .project-container {
+    position: relative;
   }
 
-  /* Project image hover effects */
-  .project-image {
-    transition: all 0.3s ease;
+  .content-container {
+    height: 500px; /* Hauteur fixe */
+    display: flex;
+    align-items: center;
+  }
+
+  .project-description {
+    max-width: 900px;
+    margin: 2rem auto 0;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--color-light);
+    opacity: 0.9;
+  }
+
+  .project-link {
+    color: var(--color-orange);
+    text-decoration: none;
+    position: relative;
+    transition: opacity 0.3s ease;
+  }
+
+  .project-link:hover {
+    opacity: 0.8;
+  }
+
+  .project-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-orange);
+    transition: width 0.3s ease;
+  }
+
+  .project-link:hover::after {
+    width: 100%;
+  }
+
+  .carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: #0D1117;
+  }
+
+  .carousel-track {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+    transform: scale(0.98);
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+  }
+
+  .carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    padding: 0;
+    background: none;
+    filter: grayscale(0.8);
+    transition: filter 0.3s ease;
+  }
+
+  .carousel-slide:hover .carousel-image {
+    filter: none;
   }
 
   .project-overlay {
+    position: absolute;
+    inset: 0;
     background-color: var(--color-orange);
-    opacity: 0.4;
+    opacity: 0.5;
     mix-blend-mode: color;
-    transition: opacity 300ms ease;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
   }
 
-  .project-container:hover .project-overlay {
+  .carousel-slide:hover .project-overlay {
     opacity: 0;
   }
 
-  /* Technology list styling */
-  .tech-list {
-    color: var(--color-orange);
-  }
-
-  /* Arrow bullet points */
-  .arrow {
-    color: var(--color-orange);
-    opacity: 1;
-  }
-
-  /* Bouton externe animation */
   .external-link {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 20;
+    background: #2a2a2a;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s ease;
+    width: 2rem;
+    height: 2rem;
   }
 
   .external-link:hover {
@@ -135,7 +211,33 @@
     color: var(--color-dark);
   }
 
-  /* Technology pills styling */
+  .carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    padding: 0.75rem;
+    margin: 0 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .carousel-nav.prev {
+    left: 0;
+  }
+
+  .carousel-nav.next {
+    right: 0;
+  }
+
+  .carousel-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
   .tech-pill {
     background-color: var(--color-orange-10);
     color: var(--color-orange);
@@ -145,120 +247,165 @@
     font-size: 0.875rem;
     white-space: nowrap;
   }
+
+  .visit-button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 20;
+    background: rgba(42, 42, 42, 0.9);
+    color: var(--color-light);
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .visit-button:hover {
+    background: var(--color-orange);
+    color: var(--color-dark);
+  }
+
+  .visit-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--color-light);
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight {
+    color: var(--color-orange);
+    font-weight: 500;
+    position: relative;
+    display: inline-block;
+  }
+
+  .highlight::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-orange);
+    transition: width 0.3s ease;
+  }
+
+  .highlight:hover::after {
+    width: 100%;
+  }
+
+  .text-light {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .carousel-container {
+      aspect-ratio: 16 / 10;
+    }
+
+    .project-description {
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .carousel-nav {
+      padding: 0.75rem;
+      margin: 0 0.5rem;
+    }
+  }
 </style>
 
-<!-- Projects Section -->
-<section id="projects" class="pt-16 pb-16 bg-dark scroll-mt-[100px]">
-  <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40">
-    <!-- Section Title -->
-    <div class="flex items-center gap-4 mb-8 md:mb-16">
-      <h2 class="text-2xl font-mono whitespace-nowrap">
-        <span class="number">03.</span>
-        <span class="text-light">Things I've Built</span>
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 
+        class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
+        in:fly={{ y: 20, duration: 600, easing: cubicOut }}
+      >
+        Featured Projects
       </h2>
-      <div class="h-[1px] w-32 md:w-96 bg-light/20"></div>
+      <h3 
+        class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-400 mb-12"
+        in:fly={{ y: 20, duration: 600, easing: cubicOut }}
+      >
+        A glimpse into our work in the DeFi space
+      </h3>
     </div>
 
-    <!-- Projects Grid -->
-    <div class="space-y-16 md:space-y-32">
-      {#each projects as project, index}
-        {#if project.featured}
-          <div class="relative grid grid-cols-12 gap-4 md:gap-16">
-            <!-- Contenu -->
-            <div class="col-span-12 md:col-span-5 flex flex-col justify-center 
-                        {index % 2 === 1 ? 'md:order-1' : ''} order-1"
-            >
-              <div class="space-y-4 text-left md:text-{index % 2 === 1 ? 'left' : 'right'} 
-                          flex flex-col items-start md:items-{index % 2 === 1 ? 'start' : 'end'}"
-              >
-                <p class="font-mono text-[var(--color-orange)] text-sm">Featured Project</p>
-                <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-light whitespace-nowrap">
-                  {project.title}
-                </h3>
-
-                <!-- Image sur Mobile -->
-                <div class="block md:hidden w-full">
-                  <div class="relative rounded-lg overflow-hidden group h-fit">
-                    <!-- Lien pour Mobile -->
-                    <a 
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="block w-full h-full"
-                    >
-                      <img 
-                        src={project.image} 
-                        alt={project.title}
-                        class="w-full grayscale group-hover:grayscale-0 transition-all duration-300"
-                      />
-                      <div class="absolute inset-0 bg-[var(--color-orange)] opacity-40 mix-blend-color group-hover:opacity-0 transition-opacity duration-300"></div>
-                    </a>
-                    <!-- Icône pour Mobile -->
-                    <a 
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="absolute top-4 right-4 external-link bg-[#2a2a2a] p-2 rounded-lg z-20"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="bg-[#2a2a2a] p-4 md:p-6 rounded-lg w-full md:w-auto 
-                           {index % 2 === 1 ? 'md:-mr-48' : 'md:-ml-48'} relative z-10 
-                           border border-[var(--color-orange)]/20"
-                >
-                  <p class="text-light/70 text-sm md:text-base">
-                    {project.description}
-                  </p>
-                </div>
-                <div class="flex flex-col gap-4 w-full">
-                  <ul class="flex flex-wrap gap-x-3 gap-y-4 text-sm md:text-base 
-                             {index % 2 === 1 ? '' : 'md:justify-end'}"
-                  >
-                    {#each project.technologies as tech}
-                      <li>
-                        <span class="tech-pill">{tech}</span>
-                      </li>
-                    {/each}
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Image pour Desktop -->
-            <div 
-              class="hidden md:block col-span-12 md:col-span-7 relative rounded-lg overflow-hidden group h-fit 
-                     {index % 2 === 1 ? 'md:order-2' : ''}"
-            >
-              <div class="absolute inset-0 z-10">
+    <div>
+      <div 
+        class="project-container relative"
+        bind:this={blocks[0]}
+      >
+        {#if visibleBlocks.has(0)}
+          <div 
+            class="carousel-container"
+            in:fly={{ 
+              y: 100, 
+              duration: 1200,
+              delay: getTransitionDelay(0),
+              easing: cubicOut 
+            }}
+          >
+            <div class="carousel-track">
+              {#each images as image, index}
                 <a 
-                  href={project.link}
+                  href={image.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  class="block w-full h-full"
-                ></a>
-              </div>
-              
-              <img 
-                src={project.image} 
-                alt={project.title}
-                class="w-full grayscale group-hover:grayscale-0 transition-all duration-300"
-              />
-              <div class="absolute inset-0 bg-[var(--color-orange)] opacity-40 mix-blend-color group-hover:opacity-0 transition-opacity duration-300"></div>
-              <!-- Icône pour Desktop -->
-              <div class="absolute top-4 right-4 external-link bg-[#2a2a2a] p-2 rounded-lg z-20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </div>
+                  class="carousel-slide {index === currentImageIndex ? 'active' : ''}"
+                >
+                  <img 
+                    src={image.src} 
+                    alt={image.alt}
+                    class="carousel-image"
+                  />
+                  <div class="project-overlay"></div>
+                </a>
+              {/each}
             </div>
+
+            <button class="carousel-nav prev" on:click={() => {
+              currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            <button class="carousel-nav next" on:click={() => {
+              currentImageIndex = (currentImageIndex + 1) % images.length;
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
+
+          <p 
+            class="project-description"
+            in:fly={{ 
+              y: 50, 
+              duration: 1000, 
+              delay: getTransitionDelay(0) + 400,
+              easing: cubicOut 
+            }}
+          >
+            Discover <a href="/projects" class="project-link">DeTrade Fund's ecosystem</a>, our latest comprehensive DeFi platform.
+          </p>
         {/if}
-      {/each}
+      </div>
     </div>
   </div>
 </section> 

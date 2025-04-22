@@ -1,148 +1,279 @@
 <script lang="ts">
-  /**
-   * Array of technologies/skills to be displayed in the component
-   * @type {string[]}
-   */
-  const technologies = [
-    'JavaScript',
-    'TypeScript',
-    'Svelte',
-    'Python',
-    'HTML',
-    'CSS'
-  ];
+  import { onMount } from 'svelte';
+  import { fade, fly } from 'svelte/transition';
+  import { cubicOut } from 'svelte/easing';
+  
+  let blocks: HTMLElement[] = [];
+  let visibleBlocks = new Set();
+  let mousePosition = { x: 0, y: 0 };
+  let buttonElement: HTMLElement | null = null;
+
+  function getTransitionDelay(index: number): number {
+    return 400 * index;
+  }
+
+  function handleMouseMove(event: MouseEvent) {
+    if (buttonElement) {
+      const rect = buttonElement.getBoundingClientRect();
+      mousePosition.x = event.clientX - rect.left;
+      mousePosition.y = event.clientY - rect.top;
+      buttonElement.style.setProperty('--mouse-x', `${mousePosition.x}px`);
+      buttonElement.style.setProperty('--mouse-y', `${mousePosition.y}px`);
+    }
+  }
+
+  onMount(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = (entry.target as HTMLElement).dataset.index;
+            if (index) {
+              visibleBlocks.add(parseInt(index));
+              visibleBlocks = visibleBlocks;
+            }
+          }
+        });
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    blocks.forEach((block, index) => {
+      if (block) {
+        block.dataset.index = index.toString();
+        observer.observe(block);
+      }
+    });
+
+    return () => {
+      blocks.forEach(block => {
+        if (block) observer.unobserve(block);
+      });
+    };
+  });
 </script>
 
 <style>
-  /* Styling for numbered sections */
-  .number {
+  .highlight {
     color: var(--color-orange);
-    opacity: 1;
-  }
-
-  /* Arrow bullet points styling */
-  .arrow {
-    color: var(--color-orange);
-    opacity: 1;
-  }
-
-  /* Image hover effect styles */
-  .image-overlay {
-    background-color: var(--color-orange);
-    opacity: 0.4;
-    mix-blend-mode: color;
-    transition: opacity 300ms ease;
-  }
-
-  .image-container:hover .image-overlay {
-    opacity: 0;
-  }
-
-  /* Company link styles with animated underline */
-  .company-link {
-    color: var(--color-orange);
+    font-weight: 500;
     position: relative;
+    display: inline-block;
   }
 
-  .company-link :global(.underline) {
+  .highlight::after {
+    content: '';
     position: absolute;
-    bottom: -1px;
+    bottom: -2px;
     left: 0;
     width: 0;
     height: 1px;
-    background-color: var(--color-orange);
+    background: var(--color-orange);
     transition: width 0.3s ease;
   }
 
-  .company-link:hover :global(.underline) {
+  .highlight:hover::after {
+    width: 100%;
+  }
+
+  .cta-button {
+    background: transparent;
+    border: 1px solid var(--color-orange);
+    color: var(--color-orange);
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .cta-button .fill {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-orange-10);
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .cta-button:hover .fill {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .cta-button .shine {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.7s ease;
+  }
+
+  .cta-button:hover .shine {
+    transform: translateX(100%);
+  }
+
+  .cta-button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .profile-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    margin: 3rem auto;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.8);
+    transition: all 0.3s ease;
+  }
+
+  .profile-container:hover .profile-image {
+    filter: none;
+  }
+
+  .profile-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-orange);
+    opacity: 0.5;
+    mix-blend-mode: color;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-container:hover .profile-overlay {
+    opacity: 0;
+  }
+
+  .profile-description {
+    color: var(--color-light);
+    opacity: 0.9;
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .profile-name {
+    color: var(--color-orange);
+    text-decoration: none;
+    position: relative;
+    transition: opacity 0.3s ease;
+  }
+
+  .profile-name:hover {
+    opacity: 0.8;
+  }
+
+  .profile-name::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-orange);
+    transition: width 0.3s ease;
+  }
+
+  .profile-name:hover::after {
     width: 100%;
   }
 </style>
 
-<section id="about" class="pt-0 pb-16 bg-dark scroll-mt-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40">
-    <div class="flex flex-col gap-8">
-      <!-- Titre avec ligne -->
-      <div class="flex items-center gap-4">
-        <h2 class="text-2xl font-mono whitespace-nowrap">
-          <span class="number">01.</span>
-          <span class="text-light">About Me</span>
-        </h2>
-        <div class="h-[1px] w-32 bg-light/20"></div>
-      </div>
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 
+        class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
+        in:fly={{ y: 20, duration: 600, easing: cubicOut }}
+      >
+        Behind AP3 Labs
+      </h2>
+      <p 
+        class="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-400"
+        in:fly={{ y: 20, duration: 600, easing: cubicOut }}
+      >
+        Meet the developer behind every line of code
+      </p>
+    </div>
 
-      <!-- Contenu principal -->
-      <div class="flex flex-col md:flex-row md:gap-16 gap-12">
-        <!-- Image pour Mobile -->
-        <div class="relative md:hidden flex justify-center w-full mb-0">
-          <div class="relative w-full aspect-square max-w-[500px] rounded-lg overflow-hidden image-container">
-            <img 
-              src="profile.jpg" 
-              alt="Alexis Péron"
-              class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-            />
-            <div class="absolute inset-0 image-overlay"></div>
-            <div class="absolute inset-0 border-2 border-primary rounded-lg translate-x-4 translate-y-4 -z-10"></div>
-          </div>
+    <div 
+      class="max-w-4xl mx-auto text-center"
+      bind:this={blocks[0]}
+    >
+      {#if visibleBlocks.has(0)}
+        <div 
+          class="profile-container"
+          in:fly={{ 
+            y: 100, 
+            duration: 1200,
+            delay: getTransitionDelay(0),
+            easing: cubicOut 
+          }}
+        >
+          <img 
+            src="/profile.jpg" 
+            alt="AP3 Labs Developer" 
+            class="profile-image"
+          />
+          <div class="profile-overlay"></div>
         </div>
 
-        <!-- Texte -->
-        <div class="space-y-4 text-light/70 md:max-w-xl">
-          <p 
-            class="text-base md:text-lg leading-relaxed"
-          >
-            Starting with a <span class="font-bold">strong financial background</span>, I developed a deep fascination for 
-            blockchain systems. This dual perspective naturally led me into <span class="font-bold">development</span>, driven by 
-            the desire to build the mechanisms I was analyzing.
-          </p>
+        <p 
+          class="profile-description"
+          in:fly={{ 
+            y: 50, 
+            duration: 1000,
+            delay: getTransitionDelay(0) + 400,
+            easing: cubicOut 
+          }}
+        >
+          I'm <span class="profile-name">Alexis Péron</span>, a solo developer dedicated to crafting secure and efficient DeFi solutions
+        </p>
 
-          <p 
-            class="text-base md:text-lg leading-relaxed"
+        <div 
+          class="mt-12"
+          in:fly={{ 
+            y: 30, 
+            duration: 1000,
+            delay: getTransitionDelay(0) + 800,
+            easing: cubicOut 
+          }}
+        >
+          <a 
+            href="https://resume.ap3labs.com/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            My journey includes working with 
-            <a href="https://www.coinhouse.com" target="_blank" rel="noopener noreferrer" class="company-link inline">
-              a leading crypto broker
-              <span class="underline"></span>
-            </a> and 
-            <a href="https://www.kaiko.com" target="_blank" rel="noopener noreferrer" class="company-link inline">
-              the industry's most trusted data provider.
-              <span class="underline"></span>
-            </a>
-            These experiences enhanced my <span class="font-bold">technical and financial expertise</span>.
-          </p>
-
-          <p 
-            class="text-base md:text-lg leading-relaxed mb-8"
-          >
-            Here are some of the key technologies I work with:
-          </p>
-
-          <!-- Liste des technologies -->
-          <ul 
-            class="grid grid-cols-2 gap-2 text-sm md:text-base"
-          >
-            {#each technologies as tech}
-              <li class="flex items-center gap-2">
-                <span class="arrow">▹</span>
-                {tech}
-              </li>
-            {/each}
-          </ul>
+            <button class="cta-button">
+              <span class="fill"></span>
+              <span class="shine"></span>
+              <span class="relative z-10">Learn more about my journey</span>
+            </button>
+          </a>
         </div>
-
-        <!-- Image pour Desktop (inchangée) -->
-        <div class="relative hidden md:flex justify-start w-auto">
-          <div class="relative w-[340px] h-[340px] rounded-lg overflow-hidden image-container">
-            <img 
-              src="profile.jpg" 
-              alt="Alexis Péron"
-              class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
-            />
-            <div class="absolute inset-0 image-overlay"></div>
-            <div class="absolute inset-0 border-2 border-primary rounded-lg translate-x-5 translate-y-5 -z-10"></div>
-          </div>
-        </div>
-      </div>
+      {/if}
     </div>
   </div>
 </section> 
