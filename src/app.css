@@ -1,0 +1,75 @@
+/**
+ * Tailwind CSS Configuration
+ * Import base styles and plugins
+ */
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Custom font import
+ */
+@import './satoshi.css';
+
+/**
+ * Global CSS Variables and Base Styles
+ */
+@layer base {
+  :root {
+    /* Color palette */
+    --color-dark: #171717;
+    --color-cream: #feffff;
+    --color-light: #ccd6f6;
+    --color-orange: #FFA33C;
+    --color-orange-10: rgba(255, 163, 60, 0.1);
+  }
+
+  /* Default font family */
+  body {
+    font-family: 'Satoshi', sans-serif;
+  }
+}
+
+/**
+ * Custom Component Styles
+ * Extended Tailwind classes using CSS variables
+ */
+@layer components {
+  /* Background colors */
+  .bg-dark {
+    background-color: var(--color-dark);
+  }
+  .bg-cream {
+    background-color: var(--color-cream);
+  }
+
+  /* Text colors */
+  .text-dark {
+    color: var(--color-dark);
+  }
+  .text-light {
+    color: var(--color-cream);
+  }
+  .text-orange {
+    color: var(--color-orange);
+  }
+
+  /* Focus states */
+  .focus\:border-orange:focus {
+    border-color: var(--color-orange);
+  }
+  .focus\:ring-orange:focus {
+    --tw-ring-color: var(--color-orange);
+  }
+}
+
+/**
+ * Global scroll behavior
+ */
+html {
+  scroll-behavior: smooth;
+}
