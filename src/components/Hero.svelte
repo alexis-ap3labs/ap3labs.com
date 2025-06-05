@@ -118,34 +118,36 @@
 </style>
 
 <section bind:this={container} bind:this={ref}>
-  <div class="content-wrapper px-4 sm:ml-[10%]">
+  <div class="content-wrapper px-4 mx-auto sm:ml-[10%]">
     {#if mounted}
       <h1 
         class="text-4xl sm:text-4xl md:text-6xl font-bold tracking-tight text-light mb-4 max-w-2xl mx-auto sm:mx-0 text-center sm:text-left"
         in:fly={{ y: 20, duration: 800, delay: 200 }}
       >
-        Operate DeFi Strategies at Scale
+        DeFi Infrastructure for <br class="block sm:hidden" /><span class="text-[var(--color-orange)]">Asset Managers</span>
       </h1>
       <p 
         class="text-xl sm:text-xl md:text-2xl text-light/90 mb-12 leading-relaxed max-w-2xl mx-auto sm:mx-0 text-center sm:text-left"
         in:fly={{ y: 20, duration: 800, delay: 600 }}
       >
-        <span class="font-bold text-[var(--color-orange)]">We design, deploy and operate your DeFi infrastructure</span>
+        <span class="font-medium">We run the strategies and the stack.</span>
         <br />
-        <span class="font-bold">so you can focus on capital and returns.</span>
+        <span class="font-medium">You focus on returns.</span>
       </p>
       <div
         class="flex justify-center sm:justify-start"
         in:fly={{ y: 20, duration: 800, delay: 800 }}
       >
-        <button 
+        <a 
+          href="https://calendly.com/alexis-ap3labs/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           class="hero-button group relative inline-block px-8 sm:px-10 py-4 sm:py-5 rounded-lg border text-lg sm:text-lg font-medium"
-          on:click={openModal}
         >
           <span class="fill"></span>
           <span class="shine"></span>
-          <span class="relative z-10">Start Your Project</span>
-        </button>
+          <span class="relative z-10">Schedule a Call</span>
+        </a>
       </div>
     {/if}
   </div>

@@ -6,7 +6,7 @@
   import About from '../components/About.svelte';
   import Footer from '../components/Footer.svelte';
   import FloatingHexagons from '../components/FloatingHexagons.svelte';
-  import Loader from '../components/Loader.svelte';
+  import CallToAction from '../components/CallToAction.svelte';
   import { onMount } from 'svelte';
 
   /**
@@ -21,11 +21,6 @@
 
   let scrollProgress = 0;
   let mainElement: HTMLElement;
-  let isLoading = true;
-
-  function handleLoadingComplete() {
-    isLoading = false;
-  }
 
   /**
    * Initialize page behavior
@@ -129,39 +124,36 @@
   }
 </style>
 
-{#if isLoading}
-  <Loader finishLoading={handleLoadingComplete} />
-{:else}
-  <Header />
+<Header />
 
-  <!-- Indicateur de défilement -->
-  <div class="scroll-indicator">
-    <div 
-      class="scroll-progress" 
-      style="--progress: {scrollProgress}%"
-    ></div>
-  </div>
+<!-- Indicateur de défilement -->
+<div class="scroll-indicator">
+  <div 
+    class="scroll-progress" 
+    style="--progress: {scrollProgress}%"
+  ></div>
+</div>
 
-  <!-- Main Content -->
-  <main 
-    bind:this={mainElement}
-    style="--scroll: {scrollProgress}"
-  >
-    <FloatingHexagons />
-    <Hero />
-    <section id="services">
-      <Services />
-    </section>
-    <section id="projects">
-      <Projects />
-    </section>
-    <section id="about">
-      <About />
-    </section>
-  </main>
+<!-- Main Content -->
+<main 
+  bind:this={mainElement}
+  style="--scroll: {scrollProgress}"
+>
+  <FloatingHexagons />
+  <Hero />
+  <section id="services">
+    <Services />
+  </section>
+  <section id="projects">
+    <Projects />
+  </section>
+  <section id="about">
+    <About />
+  </section>
+  <CallToAction />
+</main>
 
-  <Footer />
-{/if}
+<Footer />
 
 <svelte:head>
     <title>AP3 Labs - Scalable DeFi Operations</title>

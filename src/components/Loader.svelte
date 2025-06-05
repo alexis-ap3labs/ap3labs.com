@@ -27,7 +27,7 @@
 
         setTimeout(() => {
             isMounted = true;
-            setTimeout(finishLoading, 2500);
+            setTimeout(finishLoading, 1000);
         }, 10);
     });
 </script>
@@ -52,7 +52,7 @@
 
     /* Logo fade-out animation */
     .logo-wrapper {
-        animation: fadeOut 0.3s ease forwards 2.2s;
+        animation: fadeOut 0.3s ease forwards 0.7s;
     }
 
     @keyframes fadeOut {

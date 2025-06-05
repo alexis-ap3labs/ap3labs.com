@@ -12,6 +12,7 @@
     let hasScrolled = false;
     let isMenuOpen = false;
     let isHeaderMounted = false;
+    let scrollTimeout: number;
 
     // Détermine si nous sommes sur la landing page
     $: isLandingPage = $page.url.pathname === '/';
@@ -92,6 +93,18 @@
             hasScrolled = currentScrollY > 50;
             lastScrollY = currentScrollY;
             
+            // Clear previous timeout
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+
+            // Set new timeout to hide border after scrolling stops
+            if (currentScrollY < lastScrollY) {
+                scrollTimeout = setTimeout(() => {
+                    hasScrolled = false;
+                }, 1000); // Hide border after 1 second of no scrolling
+            }
+            
             // Mettre à jour la section active pendant le défilement
             updateActiveSection();
         };
@@ -105,6 +118,9 @@
         return () => {
             window.removeEventListener('scroll', handleScroll);
             window.removeEventListener('hashchange', handleHashChange);
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
         };
     });
 
@@ -392,8 +408,4 @@
             on:click={() => isMenuOpen = false}
         ></div>
     </nav>
-    <div 
-        class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-opacity duration-300"
-        class:opacity-0={!hasScrolled}
-    ></div>
 </header> 

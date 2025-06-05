@@ -12,19 +12,19 @@
     {
       id: 'yield-engineering',
       title: 'Yield Engineering',
-      description: 'We design DeFi yield strategies aligned with your risk profile and asset allocation. Backed by on-chain analytics and market research, we target the most relevant risk-adjusted opportunities and deliver a clear, actionable plan.',
+      description: 'Optimizing DeFi strategies through on-chain analytics and market research for optimal risk-adjusted returns.',
       features: ['Strategy Planning', 'Yield Optimization', 'Risk Management', 'On-Chain Analytics']
     },
     {
       id: 'smart-contract-orchestration',
       title: 'Secure Contract Integration',
-      description: 'We integrate and deploy existing smart contracts, manage role-based access controls (whitelists, multisig), and handle all read/write operations across vault systems and subgraphs, ensuring seamless execution and capital flow efficiency.',
+      description: 'Secure deployment and management of smart contracts with role-based access for efficient capital flow.',
       features: ['Secure Deploy', 'Role Control', 'Contract Ops', 'Graph Sync']
     },
     {
       id: 'unified-front-end-platform',
       title: 'Unified \nFront-End Platform',
-      description: 'Our integration layer brings together analytics visualizations, interactive position management, and back‑office operations into one responsive UI. Teams can track KPIs, trigger transactions, and oversee vaults—all without switching screens.',
+      description: 'Single interface for analytics, position management, and vault operations.',
       features: ['Analytics', 'Dashboard', 'UX Design', 'Monitoring']
     }
   ];
@@ -125,11 +125,12 @@
     display: flex;
     flex-direction: column;
     min-height: 100%;
+    padding: 0.5rem;
   }
 
   .service-title-wrapper {
-    min-height: 5rem;
-    margin-bottom: 2rem;
+    min-height: 4rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: flex-start;
     gap: 1.5rem;
@@ -187,18 +188,20 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    gap: 2rem;
   }
 
   .description {
-    margin-bottom: 2rem;
-    line-height: 1.6;
+    margin: 0;
+    line-height: 1.5;
+    font-size: 0.95rem;
   }
 
   .features-grid {
     margin-top: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .feature-item {
@@ -206,6 +209,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+  }
+
+  .feature-item div {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
   }
 
   .number-animation {
@@ -297,7 +306,7 @@
                 </h3>
               </div>
               <div class="description-wrapper">
-                <p class="description text-light/80">
+                <p class="description" style="color: var(--color-light); opacity: 0.9;">
                   {service.description}
                 </p>
                 <div class="features-grid">

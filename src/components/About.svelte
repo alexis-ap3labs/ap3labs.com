@@ -143,17 +143,45 @@
   }
 
   .founders-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 4rem;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    justify-content: center;
+    align-items: start;
     padding-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .founders-container {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .profile-container {
+      width: 240px;
+      height: 240px;
+      margin: 2rem auto;
+    }
+
+    .profile-title {
+      font-size: 1rem;
+    }
+
+    .profile-desc {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-name {
+      font-size: 1.2rem;
+    }
   }
 
   .founder-card {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .profile-image {
@@ -247,6 +275,19 @@
   .linkedin-logo-wrapper {
     margin-top: 1.2rem;
   }
+
+  .team-card.antoine .overlay {
+    opacity: 0.25;
+  }
+
+  .team-card.antoine img {
+    filter: sepia(0.3) brightness(1.1);
+  }
+
+  .profile-description {
+    width: 100%;
+    max-width: 280px;
+  }
 </style>
 
 <section class="py-24">
@@ -303,7 +344,7 @@
             >
               <span class="profile-name">Alexis Péron</span><br />
               <span class="profile-title">Web3 Solutions Architect</span>
-              <span class="profile-desc">Dedicated to crafting secure and efficient DeFi solutions.</span>
+              <span class="profile-desc">Leading infrastructure deployment and operations, ensuring seamless smart contract integration and efficient fund execution processes.</span>
             </div>
 
             <div class="flex flex-col items-center gap-2 mb-4">
@@ -346,7 +387,7 @@
             >
               <span class="profile-name">Antoine Raymond</span><br />
               <span class="profile-title">DeFi Strategist</span>
-              <span class="profile-desc">Passionate about smart contract security and architecture.</span>
+              <span class="profile-desc">Mastering yield optimization strategies and DeFi protocols, driving fund performance through innovative investment approaches.</span>
             </div>
 
             <div class="flex flex-col items-center gap-2 mb-4">
