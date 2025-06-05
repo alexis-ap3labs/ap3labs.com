@@ -166,6 +166,12 @@
       opacity: 1 !important;
     }
 
+    /* Scrolled header styles */
+    .scrolled {
+        backdrop-filter: blur(4px);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
     /* Resume button styling */
     .resume-button {
       color: var(--color-orange);
@@ -279,9 +285,10 @@
 </style>
   
 <header 
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-md bg-[var(--color-dark)]/95"
+    class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
     class:translate-y-[-100%]={!isNavVisible}
     class:opacity-0={!isNavVisible}
+    class:scrolled={hasScrolled}
 >
     <nav class="max-w-screen-2xl mx-auto px-6 md:px-12 py-8 relative">
         <!-- Logo -->

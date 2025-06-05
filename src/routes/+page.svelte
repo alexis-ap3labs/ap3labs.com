@@ -156,6 +156,6 @@
 <Footer />
 
 <svelte:head>
-    <title>AP3 Labs - Scalable DeFi Operations</title>
-    <meta name="description" content="End-to-end custom solutions for DeFi operations from strategy design and infrastructure setup to ongoing operations and reporting tools. Full-stack DeFi yield implementation." />
+    <title>AP3 Labs - Private Vaults for Asset Managers</title>
+    <meta name="description" content="From architecture to execution, we run the stack. You focus on growing capital with confidence. End-to-end custom solutions for DeFi operations from strategy design and infrastructure setup to ongoing operations and reporting tools." />
 </svelte:head>
