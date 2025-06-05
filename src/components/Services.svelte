@@ -12,13 +12,13 @@
     {
       id: 'strategy-yield-design',
       title: 'Strategy & Yield Design',
-      description: 'We help you design, test, and optimize DeFi yield strategies — based on on-chain analytics, market trends, and capital constraints.',
+      description: 'We help you design, test, and optimize DeFi yield strategies based on on-chain analytics, market trends, and capital constraints.',
       features: ['Strategy Planning', 'Risk Mapping', 'Protocol Selection', 'Performance Forecasting']
     },
     {
       id: 'smart-contract-operations',
       title: 'Smart Contract Operations',
-      description: 'We deploy and operate the infrastructure behind your strategies — including capital flows, access control, and real-time indexation.',
+      description: 'We deploy and operate the infrastructure behind your strategies including capital flows, access control, and real-time indexation.',
       features: ['Secure Deployment', 'Role-Based Access', 'Contract Ops', 'Subgraph Sync']
     },
     {

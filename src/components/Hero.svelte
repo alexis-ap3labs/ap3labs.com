@@ -8,12 +8,33 @@
   let mounted = false;
   export let ref: HTMLElement | null = null;
   
+  const targets = [
+    'Asset Managers',
+    'Family Offices',
+    'High Net Worth Individuals'
+  ];
+  
+  let currentIndex = 0;
+  let currentTarget = targets[0];
+  let isAnimating = false;
+  let currentTimeout: number;
+  const rotationInterval = 8000; // 8 seconds between each rotation
+
   function openModal() {
     isModalOpen = true;
   }
 
   function closeModal() {
     isModalOpen = false;
+  }
+
+  function rotateText() {
+    isAnimating = true;
+    setTimeout(() => {
+      currentIndex = (currentIndex + 1) % targets.length;
+      currentTarget = targets[currentIndex];
+      isAnimating = false;
+    }, 1200); // 1.2 seconds for the animation
   }
   
   onMount(() => {
@@ -33,8 +54,11 @@
     container.addEventListener('mousemove', handleMouseMove);
     
     mounted = true;
+    currentTimeout = setInterval(rotateText, rotationInterval);
+
     return () => {
       container.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(currentTimeout);
     };
   });
 </script>
@@ -136,6 +160,43 @@
       margin-right: 0;
     }
   }
+
+  .target-text {
+    display: inline-block;
+    min-width: 300px;
+    position: relative;
+    white-space: nowrap;
+    transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center;
+    filter: blur(0);
+  }
+
+  .target-text.animating {
+    transform: rotateX(90deg) scale(0.8);
+    opacity: 0;
+    filter: blur(12px);
+  }
+
+  .target-text:not(.animating) {
+    animation: appear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes appear {
+    0% {
+      transform: rotateX(-90deg) scale(0.8);
+      opacity: 0;
+      filter: blur(12px);
+    }
+    100% {
+      transform: rotateX(0) scale(1);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  .static-text {
+    display: inline;
+  }
 </style>
 
 <section bind:this={container} bind:this={ref}>
@@ -145,14 +206,18 @@
         class="text-4xl sm:text-4xl md:text-6xl font-bold tracking-tight text-light mb-4 max-w-2xl mx-auto sm:mx-0 text-center sm:text-left"
         in:fly={{ y: 20, duration: 800, delay: 200 }}
       >
-        DeFi Infrastructure for <br class="block sm:hidden" /><span class="text-[var(--color-orange)]">Asset Managers</span>
+        <span class="static-text">Private Vaults for </span>
+        <br class="block sm:hidden" />
+        <span class="text-[var(--color-orange)] target-text" class:animating={isAnimating}>
+          {currentTarget}
+        </span>
       </h1>
       <p 
         class="hero-subtitle"
         in:fly={{ y: 20, duration: 800, delay: 600 }}
       >
-        We run the strategies and the stack.<br />
-        You focus on returns.
+        From architecture to execution, we run the stack.<br />
+        You focus on growing capital with confidence.
       </p>
       <div
         class="flex justify-center sm:justify-start"

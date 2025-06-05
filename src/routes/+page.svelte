@@ -157,5 +157,5 @@
 
 <svelte:head>
     <title>AP3 Labs - Scalable DeFi Operations</title>
-    <meta name="description" content="End-to-end custom solutions for DeFi operations — from strategy design and infrastructure setup to ongoing operations and reporting tools. Full-stack DeFi yield implementation." />
+    <meta name="description" content="End-to-end custom solutions for DeFi operations from strategy design and infrastructure setup to ongoing operations and reporting tools. Full-stack DeFi yield implementation." />
 </svelte:head>

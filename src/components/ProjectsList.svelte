@@ -17,7 +17,7 @@
   const projects: Project[] = [
     {
       title: "ERC-4626 DeFi Interface",
-      description: "A decentralized, modular DApp for interacting with ERC-4626 vaults. Deposit, withdraw, and track assets with real-time analytics via TheGraph. Custom wallet integration with Svelte stores and window.ethereum — no wagmi, no bloat.",
+      description: "A decentralized, modular DApp for interacting with ERC-4626 vaults. Deposit, withdraw, and track assets with real-time analytics via TheGraph. Custom wallet integration with Svelte stores and window.ethereum, no wagmi, no bloat.",
       image: "/app-detrade.png",
       link: "https://app.detrade.fund/",
       technologies: ["TypeScript", "Svelte", "HTML/CSS", "TailwindCSS", "Ethers.js"],
@@ -263,7 +263,7 @@
       >
         <h3 class="section-title text-[var(--color-orange)]">Mission</h3>
         <p class="section-subtitle">
-          We support our main client — a crypto asset manager — across the entire value chain:
+          We support our main client a crypto asset manager across the entire value chain:
         </p>
         <ul class="space-y-3">
           <li class="feature-item">Strategic research and portfolio allocation</li>
