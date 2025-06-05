@@ -27,15 +27,28 @@
     $: getLinkNumber = (baseNumber: number) => {
         if (isLandingPage) return baseNumber;
         
-        let number = 1; // Home est toujours 1
-        if (baseNumber === 1) return number;
+        // Sur les pages de services, on commence toujours à 1 pour Home
+        if (baseNumber === 1) return 1;
         
-        // Pour les autres liens, on incrémente seulement si le lien précédent est visible
-        if (baseNumber === 2 && currentPage !== '/services/yield-engineering' && !isProjectsPage) number++;
-        if (baseNumber === 3 && currentPage !== '/services/secure-contract-integration' && !isProjectsPage) number++;
-        if (baseNumber === 4 && currentPage !== '/services/unified-front-end-platform' && !isProjectsPage) number++;
+        // Pour les autres liens, on compte combien de liens sont visibles avant celui-ci
+        let visibleCount = 1; // On commence à 1 car Home est toujours visible
         
-        return number;
+        if (currentPage !== '/services/strategy-yield-design' && !isProjectsPage) {
+            if (baseNumber === 2) return visibleCount + 1;
+            visibleCount++;
+        }
+        
+        if (currentPage !== '/services/smart-contract-operations' && !isProjectsPage) {
+            if (baseNumber === 3) return visibleCount + 1;
+            visibleCount++;
+        }
+        
+        if (currentPage !== '/services/defi-control-interface' && !isProjectsPage) {
+            if (baseNumber === 4) return visibleCount + 1;
+            visibleCount++;
+        }
+        
+        return visibleCount + 1;
     };
 
     /**
@@ -339,44 +352,44 @@
                             </span>
                         </a>
                     </li>
-                    {#if currentPage !== '/services/yield-engineering' && !isProjectsPage}
+                    {#if currentPage !== '/services/strategy-yield-design' && !isProjectsPage}
                         <li in:fly={{ y: -20, duration: 800, delay: 300 }}>
                             <a 
-                                href="/services/yield-engineering" 
+                                href="/services/strategy-yield-design" 
                                 class="group flex items-center gap-2 hover:text-primary transition-colors"
                             >
                                 <span class="number text-sm">{getLinkNumber(2).toString().padStart(2, '0')}.</span>
                                 <span class="relative">
-                                    Yield Engineering
+                                    Strategy & Yield Design
                                     <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                                 </span>
                             </a>
                         </li>
                     {/if}
-                    {#if currentPage !== '/services/secure-contract-integration' && !isProjectsPage}
+                    {#if currentPage !== '/services/smart-contract-operations' && !isProjectsPage}
                         <li in:fly={{ y: -20, duration: 800, delay: 400 }}>
                             <a 
-                                href="/services/secure-contract-integration" 
+                                href="/services/smart-contract-operations" 
                                 class="group flex items-center gap-2 hover:text-primary transition-colors"
                             >
                                 <span class="number text-sm">{getLinkNumber(3).toString().padStart(2, '0')}.</span>
                                 <span class="relative">
-                                    Secure Contract
-                                    <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
+                                    Smart Contract Operations
+                                    <span class="absolute -bottom-1 left:0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                                 </span>
                             </a>
                         </li>
                     {/if}
-                    {#if currentPage !== '/services/unified-front-end-platform' && !isProjectsPage}
+                    {#if currentPage !== '/services/defi-control-interface' && !isProjectsPage}
                         <li in:fly={{ y: -20, duration: 800, delay: 500 }}>
                             <a 
-                                href="/services/unified-front-end-platform" 
+                                href="/services/defi-control-interface" 
                                 class="group flex items-center gap-2 hover:text-primary transition-colors"
                             >
                                 <span class="number text-sm">{getLinkNumber(4).toString().padStart(2, '0')}.</span>
                                 <span class="relative">
-                                    Unified Front-End
-                                    <span class="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
+                                    DeFi Control Interface
+                                    <span class="absolute -bottom-1 left:0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-300"></span>
                                 </span>
                             </a>
                         </li>

@@ -6,42 +6,42 @@
   const sections = [
     {
       title: 'Strategy Planning',
-      subtitle: 'Designing yield strategies aligned with institutional mandates',
+      subtitle: 'Comprehensive analysis of market conditions and capital requirements',
       features: [
-        'Define objectives, constraints, and risk appetite',
-        'Model asset allocation and capital deployment plans',
-        'Select protocol verticals based on fit and maturity',
-        'Simulate scenarios to test strategic robustness'
+        'Market analysis and research',
+        'Capital requirement assessment',
+        'Strategy optimization',
+        'Risk-adjusted return modeling'
       ]
     },
     {
-      title: 'Yield Optimization',
-      subtitle: 'Enhancing net returns through active strategy refinement',
+      title: 'Risk Mapping',
+      subtitle: 'Detailed assessment of protocol risks and market volatility',
       features: [
-        'Monitor and reallocate based on real-time performance',
-        'Optimize reward harvesting, compounding, and reinvestment flows',
-        'Integrate liquidity mining and incentive programs',
-        'Adjust strategies dynamically based on on-chain conditions'
+        'Protocol risk assessment',
+        'Smart contract security audit',
+        'Market volatility analysis',
+        'Risk mitigation strategies'
       ]
     },
     {
-      title: 'Risk Management',
-      subtitle: 'Identifying and mitigating risks across DeFi operations',
+      title: 'Protocol Selection',
+      subtitle: 'Careful evaluation of DeFi protocols based on security and yield',
       features: [
-        'Perform risk audits on protocols and positions',
-        'Map exposure by chain, counterparty, and asset type',
-        'Track depeg, slippage, and liquidity events',
-        'Establish alerting and safeguard mechanisms'
+        'Protocol due diligence',
+        'Liquidity analysis',
+        'Yield potential assessment',
+        'Security evaluation'
       ]
     },
     {
-      title: 'On-Chain Analytics',
-      subtitle: 'Powering decisions with transparent, data-driven insights',
+      title: 'Performance Forecasting',
+      subtitle: 'Advanced modeling of strategy performance under various conditions',
       features: [
-        'Build custom dashboards for NAV and position tracking',
-        'Aggregate protocol yields and funding rates',
-        'Provide backtesting and benchmarking for strategies',
-        'Generate reporting outputs for internal or client use'
+        'Performance modeling',
+        'Scenario analysis',
+        'Return projections',
+        'Risk factor simulation'
       ]
     }
   ];
@@ -224,41 +224,27 @@
 
   .hero-section {
     background: transparent;
-    padding: 8rem 0 4rem;
-  }
-
-  .hero-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.2;
-    color: #ffffff;
-    margin-bottom: 1rem;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(1.25rem, 3vw, 1.75rem);
-    color: #ffffff;
-    opacity: 0.8;
+    padding: 12rem 0 6rem;
   }
 
   @media (max-width: 768px) {
+    .hero-section {
+      padding: 8rem 0 4rem;
+    }
     .service-block {
       padding: 2rem;
     }
-
     .service-number {
       top: 2rem;
       left: 2rem;
     }
-
     .service-title {
       padding-left: 3rem;
       font-size: 1.5rem;
     }
-
     .service-subtitle {
       padding-left: 3rem;
     }
-
     .features-list {
       padding-left: 3rem;
     }
@@ -272,13 +258,13 @@
         class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Yield Engineering
+        Strategy & Yield Design
       </h2>
       <h3 
         class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-400 mb-12"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Institutional-grade yield strategies for DeFi protocols
+        Designing and optimizing DeFi yield strategies through on-chain analytics and market research
       </h3>
     </div>
 

@@ -10,22 +10,22 @@
 
   const services = [
     {
-      id: 'yield-engineering',
-      title: 'Yield Engineering',
-      description: 'Optimizing DeFi strategies through on-chain analytics and market research for optimal risk-adjusted returns.',
-      features: ['Strategy Planning', 'Yield Optimization', 'Risk Management', 'On-Chain Analytics']
+      id: 'strategy-yield-design',
+      title: 'Strategy & Yield Design',
+      description: 'We help you design, test, and optimize DeFi yield strategies — based on on-chain analytics, market trends, and capital constraints.',
+      features: ['Strategy Planning', 'Risk Mapping', 'Protocol Selection', 'Performance Forecasting']
     },
     {
-      id: 'smart-contract-orchestration',
-      title: 'Secure Contract Integration',
-      description: 'Secure deployment and management of smart contracts with role-based access for efficient capital flow.',
-      features: ['Secure Deploy', 'Role Control', 'Contract Ops', 'Graph Sync']
+      id: 'smart-contract-operations',
+      title: 'Smart Contract Operations',
+      description: 'We deploy and operate the infrastructure behind your strategies — including capital flows, access control, and real-time indexation.',
+      features: ['Secure Deployment', 'Role-Based Access', 'Contract Ops', 'Subgraph Sync']
     },
     {
-      id: 'unified-front-end-platform',
-      title: 'Unified \nFront-End Platform',
-      description: 'Single interface for analytics, position management, and vault operations.',
-      features: ['Analytics', 'Dashboard', 'UX Design', 'Monitoring']
+      id: 'defi-control-interface',
+      title: 'DeFi Control Interface',
+      description: 'We deliver a custom platform to manage your positions, monitor performance, and streamline reporting.',
+      features: ['Live Dashboard', 'Vault Monitoring', 'UX & Design', 'Analytics & Reporting Tools']
     }
   ];
   
@@ -248,13 +248,13 @@
         class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Our Expertise
+        Our Services
       </h2>
       <h3 
         class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-400 mb-12"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        From DeFi consulting to technical implementation
+        Designing, operating, and maintaining institutional DeFi infrastructure
       </h3>
     </div>
 
@@ -267,7 +267,7 @@
           class="service-block w-full p-8 rounded-xl bg-dark/30 transition-all duration-300 hover:scale-[1.02] border border-orange/10 hover:border-orange/30 shadow-[0_0_40px_rgba(255,163,60,0.05)] hover:shadow-[0_0_50px_rgba(255,163,60,0.15)] relative group cursor-pointer"
         >
           <a 
-            href="/services/{service.title.toLowerCase().replace(/\s+/g, '-')}" 
+            href="/services/{service.id}" 
             target="_blank"
             class="absolute inset-0 z-10"
             aria-label="Learn more about {service.title}"

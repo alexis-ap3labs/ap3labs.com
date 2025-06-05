@@ -5,7 +5,7 @@
 
   const sections = [
     {
-      title: 'Secure Deploy',
+      title: 'Secure Deployment',
       subtitle: 'Set up and manage contract deployments with multisig and upgrade safeguards',
       features: [
         'Multi-signature deployment workflows',
@@ -15,7 +15,7 @@
       ]
     },
     {
-      title: 'Role Control',
+      title: 'Role-Based Access',
       subtitle: 'Configure whitelists and granular access permissions across components',
       features: [
         'Access control system design',
@@ -35,7 +35,7 @@
       ]
     },
     {
-      title: 'Graph Sync',
+      title: 'Subgraph Sync',
       subtitle: 'Maintain subgraphs for accurate and real-time protocol data indexing',
       features: [
         'Subgraph development',
@@ -224,7 +224,7 @@
 
   .hero-section {
     background: transparent;
-    padding: 8rem 0 4rem;
+    padding: 12rem 0 6rem;
   }
 
   .hero-title {
@@ -241,6 +241,9 @@
   }
 
   @media (max-width: 768px) {
+    .hero-section {
+      padding: 8rem 0 4rem;
+    }
     .service-block {
       padding: 2rem;
     }
@@ -272,13 +275,13 @@
         class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Secure Contract Integration
+        Smart Contract Operations
       </h2>
       <h3 
         class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-400 mb-12"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Deploying and managing smart contracts with precision and security
+        We deploy and operate the infrastructure behind your strategies including capital flows, access control, and real-time indexation
       </h3>
     </div>
 

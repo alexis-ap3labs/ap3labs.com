@@ -115,6 +115,27 @@
     color: var(--color-light);
     opacity: 0.8;
   }
+
+  .hero-subtitle {
+    color: #bfc9db;
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (min-width: 640px) {
+    .hero-subtitle {
+      text-align: left;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 </style>
 
 <section bind:this={container} bind:this={ref}>
@@ -127,12 +148,11 @@
         DeFi Infrastructure for <br class="block sm:hidden" /><span class="text-[var(--color-orange)]">Asset Managers</span>
       </h1>
       <p 
-        class="text-xl sm:text-xl md:text-2xl text-light/90 mb-12 leading-relaxed max-w-2xl mx-auto sm:mx-0 text-center sm:text-left"
+        class="hero-subtitle"
         in:fly={{ y: 20, duration: 800, delay: 600 }}
       >
-        <span class="font-medium">We run the strategies and the stack.</span>
-        <br />
-        <span class="font-medium">You focus on returns.</span>
+        We run the strategies and the stack.<br />
+        You focus on returns.
       </p>
       <div
         class="flex justify-center sm:justify-start"

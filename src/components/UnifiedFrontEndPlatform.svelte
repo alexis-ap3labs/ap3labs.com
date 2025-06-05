@@ -5,18 +5,8 @@
 
   const sections = [
     {
-      title: 'Analytics Dashboard',
-      subtitle: 'Comprehensive data visualization and real-time monitoring',
-      features: [
-        'Custom metrics and KPIs tracking',
-        'Real-time performance monitoring',
-        'Interactive data visualization',
-        'Automated reporting systems'
-      ]
-    },
-    {
-      title: 'Position Management',
-      subtitle: 'Intuitive interface for managing DeFi positions and strategies',
+      title: 'Live Dashboard',
+      subtitle: 'Real-time monitoring and analytics for your DeFi positions',
       features: [
         'Portfolio overview and tracking',
         'Strategy performance analytics',
@@ -25,23 +15,33 @@
       ]
     },
     {
-      title: 'Back-Office Operations',
-      subtitle: 'Streamlined tools for operational efficiency',
+      title: 'Vault Monitoring',
+      subtitle: 'Comprehensive tracking of your yield strategies and vaults',
       features: [
-        'Transaction management',
-        'Documentation and compliance',
-        'Team collaboration tools',
-        'Workflow automation'
+        'Vault performance metrics',
+        'Yield analytics',
+        'Risk assessment',
+        'Automated reporting'
       ]
     },
     {
-      title: 'User Experience',
+      title: 'UX & Design',
       subtitle: 'Modern, responsive design for optimal interaction',
       features: [
         'Intuitive navigation',
         'Responsive layouts',
         'Performance optimization',
         'Accessibility compliance'
+      ]
+    },
+    {
+      title: 'Analytics & Reporting',
+      subtitle: 'Advanced tools for data analysis and reporting',
+      features: [
+        'Custom metrics and KPIs',
+        'Automated reporting systems',
+        'Data visualization',
+        'Performance tracking'
       ]
     }
   ];
@@ -224,7 +224,7 @@
 
   .hero-section {
     background: transparent;
-    padding: 8rem 0 4rem;
+    padding: 12rem 0 6rem;
   }
 
   .hero-title {
@@ -241,24 +241,23 @@
   }
 
   @media (max-width: 768px) {
+    .hero-section {
+      padding: 8rem 0 4rem;
+    }
     .service-block {
       padding: 2rem;
     }
-
     .service-number {
       top: 2rem;
       left: 2rem;
     }
-
     .service-title {
       padding-left: 3rem;
       font-size: 1.5rem;
     }
-
     .service-subtitle {
       padding-left: 3rem;
     }
-
     .features-list {
       padding-left: 3rem;
     }
@@ -272,13 +271,13 @@
         class="text-3xl sm:text-4xl md:text-5xl font-bold text-light mb-4"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Unified Front-End Platform
+        DeFi Control Interface
       </h2>
       <h3 
         class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-400 mb-12"
         in:fly={{ y: 20, duration: 600, easing: cubicOut }}
       >
-        Bringing together analytics, management, and operations in one seamless interface
+        We deliver a custom platform to manage your positions, monitor performance, and streamline reporting
       </h3>
     </div>
 
