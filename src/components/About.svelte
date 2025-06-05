@@ -259,21 +259,20 @@
   }
 
   .linkedin-logo {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     display: inline-block;
-    fill: var(--color-orange);
-    transition: filter 0.2s, fill 0.2s;
-    filter: drop-shadow(0 0 1px var(--color-orange));
+    fill: var(--color-light);
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
     cursor: pointer;
   }
   .linkedin-logo:hover {
-    filter: drop-shadow(0 0 3px var(--color-orange));
-    fill: #fff;
+    opacity: 0.8;
   }
 
   .linkedin-logo-wrapper {
-    margin-top: 1.2rem;
+    margin-top: 1rem;
   }
 
   .team-card.antoine .overlay {
