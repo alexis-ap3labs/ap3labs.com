@@ -11,7 +11,7 @@
   const targets = [
     { desktop: 'Asset Managers', mobile: 'Asset Managers' },
     { desktop: 'Family Offices', mobile: 'Family Offices' },
-    { desktop: 'High Net Worth Individuals', mobile: 'High Net Worth\nIndividuals' }
+    { desktop: 'High Net Worth Individuals', mobile: 'High Net Worth Individuals' }
   ];
   
   let currentIndex = 0;
@@ -167,7 +167,7 @@
     display: inline-block;
     min-width: 200px;
     position: relative;
-    white-space: pre-line;
+    white-space: nowrap;
     transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-origin: center;
     filter: blur(0);
@@ -215,10 +215,13 @@
         in:fly={{ y: 20, duration: 800, delay: 200 }}
       >
         <span class="static-text">Private Vaults for </span>
-        <br class="block sm:hidden" />
         <span class="text-[var(--color-orange)] target-text" class:animating={isAnimating}>
-          <span class="sm:hidden">{currentMobileTarget}</span>
-          <span class="hidden sm:inline">{currentTarget}</span>
+          {#if currentTarget === 'High Net Worth Individuals'}
+            <span class="sm:hidden">High Net Worth<br />Individuals</span>
+            <span class="hidden sm:inline">{currentTarget}</span>
+          {:else}
+            {currentTarget}
+          {/if}
         </span>
       </h1>
       <p 
