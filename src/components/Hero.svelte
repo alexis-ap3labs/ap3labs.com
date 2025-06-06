@@ -9,13 +9,14 @@
   export let ref: HTMLElement | null = null;
   
   const targets = [
-    'Asset Managers',
-    'Family Offices',
-    'High Net Worth Individuals'
+    { desktop: 'Asset Managers', mobile: 'Asset Managers' },
+    { desktop: 'Family Offices', mobile: 'Family Offices' },
+    { desktop: 'High Net Worth Individuals', mobile: 'High Net Worth\nIndividuals' }
   ];
   
   let currentIndex = 0;
-  let currentTarget = targets[0];
+  let currentTarget = targets[0].desktop;
+  let currentMobileTarget = targets[0].mobile;
   let isAnimating = false;
   let currentTimeout: number;
   const rotationInterval = 8000; // 8 seconds between each rotation
@@ -32,9 +33,10 @@
     isAnimating = true;
     setTimeout(() => {
       currentIndex = (currentIndex + 1) % targets.length;
-      currentTarget = targets[currentIndex];
+      currentTarget = targets[currentIndex].desktop;
+      currentMobileTarget = targets[currentIndex].mobile;
       isAnimating = false;
-    }, 1200); // 1.2 seconds for the animation
+    }, 1200);
   }
   
   onMount(() => {
@@ -163,9 +165,9 @@
 
   .target-text {
     display: inline-block;
-    min-width: 300px;
+    min-width: 200px;
     position: relative;
-    white-space: nowrap;
+    white-space: pre-line;
     transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-origin: center;
     filter: blur(0);
@@ -194,6 +196,12 @@
     }
   }
 
+  @media (min-width: 640px) {
+    .target-text {
+      min-width: 300px;
+    }
+  }
+
   .static-text {
     display: inline;
   }
@@ -209,7 +217,8 @@
         <span class="static-text">Private Vaults for </span>
         <br class="block sm:hidden" />
         <span class="text-[var(--color-orange)] target-text" class:animating={isAnimating}>
-          {currentTarget}
+          <span class="sm:hidden">{currentMobileTarget}</span>
+          <span class="hidden sm:inline">{currentTarget}</span>
         </span>
       </h1>
       <p 
