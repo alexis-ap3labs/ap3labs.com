@@ -324,7 +324,7 @@
                 }}
               >
                 <img 
-                  src="/profile.jpg" 
+                  src="/alexis-peron-ia-filter.png" 
                   alt="Alexis Péron - AP3 Labs Developer" 
                   class="profile-image alexis-image"
                 />

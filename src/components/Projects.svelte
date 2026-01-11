@@ -34,29 +34,14 @@
 
   const images = [
     {
-      src: "/app-detrade.png",
-      alt: "DeTrade App Interface",
+      src: "/app1.png",
+      alt: "DeTrade App Interface - Vaults Overview",
       link: "https://app.detrade.fund/"
     },
     {
-      src: "/oracle-detrade.png",
-      alt: "DeTrade Oracle Interface",
-      link: "https://oracle.detrade.fund/"
-    },
-    {
-      src: "/detrade.png",
-      alt: "DeTrade Landing Page",
-      link: "https://detrade.fund/"
-    },
-    {
-      src: "/docs-detrade.png",
-      alt: "DeTrade Documentation",
-      link: "https://docs.detrade.fund/"
-    },
-    {
-      src: "/dtusdc-detrade.png",
-      alt: "DeTrade Core USDC Vault",
-      link: "https://app.detrade.fund/vault/detrade-core-usdc"
+      src: "/app2.png",
+      alt: "DeTrade App Interface - Vault Details",
+      link: "https://app.detrade.fund/"
     }
   ];
 
