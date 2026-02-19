@@ -17,7 +17,7 @@
   const projects: Project[] = [
     {
       title: "ERC-4626 DeFi Interface",
-      description: "A decentralized, modular DApp for interacting with ERC-4626 vaults. Deposit, withdraw, and track assets with real-time analytics via TheGraph. Custom wallet integration with Svelte stores and window.ethereum, no wagmi, no bloat.",
+      description: "Institutional-grade DApp built for an asset manager to interact with ERC-4626 vaults. Deposit, withdraw, and track assets with real-time analytics via TheGraph. Developed and maintained by AP3 Labs as a technical service provider.",
       image: "/app-detrade.png",
       link: "https://app.detrade.fund/",
       technologies: ["TypeScript", "Svelte", "HTML/CSS", "TailwindCSS", "Ethers.js"],
@@ -25,7 +25,7 @@
     },
     {
       title: "Oracle NAV",
-      description: "Oracle for pushing NAVs and calculating vault asset liquidation value, leveraging on-chain smart contract data and APIs for asset conversion. Cron task in GitHub Actions for regular valuation pushes.",
+      description: "On-chain/off-chain oracle built by AP3 Labs for computing and pushing Net Asset Values. Aggregates smart contract positions and API data for accurate vault valuation. Fully automated via GitHub Actions — infrastructure only, no fund management involvement.",
       image: "/oracle-detrade.png",
       link: "https://oracle.detrade.fund/",
       technologies: ["Python", "GitHub Actions", "Web3.py", "APIs", "Smart Contracts"],
@@ -252,7 +252,7 @@
         class="text-lg leading-relaxed text-light/80 text-center"
         in:fly={{ y: 20, duration: 600, delay: 600, easing: cubicOut }}
       >
-        DeTrade is our flagship project and serves as a live pilot for AP3 Labs. It's a modular DeFi infrastructure built to help institutional players deploy yield strategies in a secure, efficient, and scalable way.
+        DeTrade Fund is the flagship project we built and maintain as a technical service provider. AP3 Labs designed and operates the infrastructure — smart contracts, oracles, frontend, and monitoring — but does not manage the fund or make any investment decisions. All operational and asset management responsibilities lie with the fund manager.
       </p>
     </div>
 
@@ -261,14 +261,14 @@
         class="section-block"
         in:fly={{ y: 20, duration: 600, delay: 800, easing: cubicOut }}
       >
-        <h3 class="section-title text-[var(--color-orange)]">Mission</h3>
+        <h3 class="section-title text-[var(--color-orange)]">Our Role</h3>
         <p class="section-subtitle">
-          We support our main client a crypto asset manager across the entire value chain:
+          As a technical service provider, AP3 Labs builds and maintains the infrastructure for a crypto asset manager. We do not manage funds, execute trades, or make investment decisions.
         </p>
         <ul class="space-y-3">
-          <li class="feature-item">Strategic research and portfolio allocation</li>
-          <li class="feature-item">Vault deployment and protocol integration</li>
-          <li class="feature-item">Operational tooling and infrastructure management</li>
+          <li class="feature-item">Smart contract development and vault deployment</li>
+          <li class="feature-item">Oracle infrastructure and on-chain data pipelines</li>
+          <li class="feature-item">Frontend applications and monitoring tooling</li>
         </ul>
       </div>
 
@@ -276,38 +276,38 @@
         class="section-block"
         in:fly={{ y: 20, duration: 600, delay: 1000, easing: cubicOut }}
       >
-        <h3 class="section-title text-[var(--color-orange)]">What We Delivered</h3>
+        <h3 class="section-title text-[var(--color-orange)]">Infrastructure We Built</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div>
-            <h4 class="section-subtitle font-medium">Strategy & Allocation</h4>
-            <ul class="space-y-2">
-              <li class="feature-item">Designed risk-adjusted yield strategies</li>
-              <li class="feature-item">Modeled capital allocation</li>
-              <li class="feature-item">Selected and segmented protocols</li>
-            </ul>
-          </div>
           <div>
             <h4 class="section-subtitle font-medium">Vault Infrastructure</h4>
             <ul class="space-y-2">
-              <li class="feature-item">Deployed extended ERC-4626 vault</li>
-              <li class="feature-item">Integrated contracts using Lagoon stack</li>
-              <li class="feature-item">Configured Safe multisigs</li>
+              <li class="feature-item">Deployed extended ERC-4626 vault contracts</li>
+              <li class="feature-item">Integrated with Lagoon protocol stack</li>
+              <li class="feature-item">Configured Safe multisig architecture</li>
             </ul>
           </div>
           <div>
-            <h4 class="section-subtitle font-medium">NAV Valuation Oracle</h4>
+            <h4 class="section-subtitle font-medium">NAV Oracle System</h4>
             <ul class="space-y-2">
-              <li class="feature-item">Built custom on-chain/off-chain oracle</li>
-              <li class="feature-item">Aggregated protocol-level data</li>
-              <li class="feature-item">Automated daily NAV pushes</li>
+              <li class="feature-item">Built custom on-chain/off-chain valuation oracle</li>
+              <li class="feature-item">Aggregated protocol-level position data</li>
+              <li class="feature-item">Automated daily NAV computation and on-chain push</li>
             </ul>
           </div>
           <div>
-            <h4 class="section-subtitle font-medium">Frontend & Operations</h4>
+            <h4 class="section-subtitle font-medium">Frontend Application</h4>
             <ul class="space-y-2">
-              <li class="feature-item">Developed institutional-grade dashboard</li>
-              <li class="feature-item">Real-time monitoring tools</li>
-              <li class="feature-item">Whitelist and withdrawal interfaces</li>
+              <li class="feature-item">Institutional-grade vault dashboard</li>
+              <li class="feature-item">Real-time asset and performance monitoring</li>
+              <li class="feature-item">Deposit, withdrawal, and whitelist interfaces</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="section-subtitle font-medium">DevOps & Monitoring</h4>
+            <ul class="space-y-2">
+              <li class="feature-item">CI/CD pipelines and automated deployments</li>
+              <li class="feature-item">On-chain event monitoring and alerting</li>
+              <li class="feature-item">Infrastructure maintenance and upgrades</li>
             </ul>
           </div>
         </div>
@@ -319,7 +319,7 @@
       >
         <h3 class="section-title text-[var(--color-orange)]">Outcome</h3>
         <p class="section-subtitle">
-          DeTrade enables a crypto asset manager to operate an institutional-grade yield strategy with full transparency and robust infrastructure. It now serves as a reference implementation for other funds and partners in the DeFi space.
+          The infrastructure we delivered enables the fund manager to operate institutional-grade yield strategies with full on-chain transparency. AP3 Labs continues to maintain and evolve the technical stack, while all fund operations and investment decisions remain entirely with the asset manager.
         </p>
       </div>
 
